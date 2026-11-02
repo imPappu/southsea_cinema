@@ -1,0 +1,6 @@
+{
+  "dart.defaultFlutterDevice": "edge",
+  "dart.flutterSelectDeviceWhenConnected": false,
+  "dart.runPubGetOnPubspecChanges": "always",
+  "security.workspace.trust.enabled": false
+}
