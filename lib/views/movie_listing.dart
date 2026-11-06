@@ -28,11 +28,12 @@ class _MovieListingState extends State<MovieListing> {
           final isWide = constraints.maxWidth > 600;
           return Container(
             padding: EdgeInsets.all(isWide ? 32.0 : 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                 Image.network(
-                  'https://southseacinema.co.uk/wp-content/uploads/2024/06/2024-06-14-19.00.jpg',
+                  'https://image.tmdb.org/t/p/original/yUb2UO6Aam9rJBmWBb7MErAz2gL.jpg',
                   height: 400,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -104,7 +105,7 @@ class _MovieListingState extends State<MovieListing> {
                 ),
               ],
             ),
-          );
+          ));
         },
       ),
     );
