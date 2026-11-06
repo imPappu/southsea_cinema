@@ -15,7 +15,26 @@ class MovieListing extends StatelessWidget {
         elevation: 0,
       ),
       drawer: const NavDrawer(),
-      body: const SizedBox.shrink(),
+      body: Container(
+        child: Column(
+          children: [
+            Image.network(
+              'https://southseacinema.co.uk/wp-content/uploads/2024/06/2024-06-14-19.00.jpg',
+              height: 400,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            const Text('Your film title'),
+            const Text('Your film description'),
+            ElevatedButton(
+              onPressed: () {
+                print('Add to order button pressed');
+              },
+              child: const Text('Add to order'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
