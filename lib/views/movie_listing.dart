@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'dart:developer' as developer;
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
 class MovieListing extends StatefulWidget {
@@ -58,8 +59,8 @@ class _MovieListingState extends State<MovieListing> {
                     if (value != null) {
                       setState(() {
                         _ticketCount = value;
-                        print('Selected ticket count: $_ticketCount');
                       });
+                      developer.log('Selected ticket count: $_ticketCount', name: 'MovieListing');
                     }
                   },
                   dropdownMenuEntries: [
@@ -84,7 +85,7 @@ class _MovieListingState extends State<MovieListing> {
                     setState(() {
                       _bookingMessage = 'Added $_ticketCount tickets to the order';
                     });
-                    print(_bookingMessage);
+                    developer.log(_bookingMessage, name: 'MovieListing');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: cinemaBrand,
