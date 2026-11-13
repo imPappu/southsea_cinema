@@ -80,8 +80,8 @@ class _MovieListingState extends State<MovieListing> {
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        widget.movie.formattedTicketPrice,
+Text(
+                        widget.movie.formattedPrice,
                         style: const TextStyle(
                           color: cinemaBrand,
                           fontSize: 16,
