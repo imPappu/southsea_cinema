@@ -80,7 +80,7 @@ class _MovieListingState extends State<MovieListing> {
                         ),
                       ),
                       const Spacer(),
-Text(
+                      Text(
                         widget.movie.formattedPrice,
                         style: const TextStyle(
                           color: cinemaBrand,
@@ -105,7 +105,8 @@ Text(
                       if (value != null) {
                         setState(() {
                           _ticketCount = value;
-                          developer.log('Selected ticket count: $_ticketCount', name: 'MovieListing');
+                          developer.log('Selected ticket count: $_ticketCount',
+                              name: 'MovieListing');
                         });
                       }
                     },
@@ -129,7 +130,8 @@ Text(
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        _bookingMessage = 'Added $_ticketCount tickets to the order for ${widget.movie.title}';
+                        _bookingMessage =
+                            'Added $_ticketCount tickets to the order for ${widget.movie.title}';
                       });
                       developer.log(_bookingMessage, name: 'MovieListing');
                     },
