@@ -81,7 +81,7 @@ class _MovieListingState extends State<MovieListing> {
                       ),
                       const Spacer(),
                       Text(
-                        '£${widget.movie.ticketPrice.toStringAsFixed(2)}',
+                        widget.movie.formattedTicketPrice,
                         style: const TextStyle(
                           color: cinemaBrand,
                           fontSize: 16,
