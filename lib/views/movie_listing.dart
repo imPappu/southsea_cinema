@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/widgets/primary_button.dart';
 
 class MovieListing extends StatefulWidget {
   final Movie movie;
@@ -123,8 +124,10 @@ class _MovieListingState extends State<MovieListing> {
                       fontSize: 16,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
+const SizedBox(height: 16),
+                  PrimaryButton(
+                    key: const ValueKey('listing_add_order'),
+                    label: 'Add to order',
                     onPressed: () {
                       setState(() {
                         _bookingMessage =
@@ -132,14 +135,6 @@ class _MovieListingState extends State<MovieListing> {
                       });
                       developer.log(_bookingMessage, name: 'MovieListing');
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: cinemaBrand,
-                      foregroundColor: cinemaFontWhite,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
-                      ),
-                    ),
-                    child: const Text('Add to order'),
                   ),
                   const SizedBox(height: 8),
                   Text(
