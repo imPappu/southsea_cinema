@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -10,11 +11,67 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
+  // Keys for SharedPreferences
+  static const _nameKey = 'cinema_profile_name';
+  static const _emailKey = 'cinema_profile_email';
+  static const _phoneKey = 'cinema_profile_phone';
+  static const _addressKey = 'cinema_profile_address';
+  static const _newsletterKey = 'cinema_newsletter_preference';
+
+  // Form key
   final _formKey = GlobalKey<FormState>();
+
+  // Controllers and state
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
+  bool _isSaving = false;
+  bool _newsletterSelected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      _nameController.text = prefs.getString(_nameKey) ?? '';
+      _emailController.text = prefs.getString(_emailKey) ?? '';
+      _phoneController.text = prefs.getString(_phoneKey) ?? '';
+      _addressController.text = prefs.getString(_addressKey) ?? '';
+      _newsletterSelected = prefs.getBool(_newsletterKey) ?? false;
+    });
+  }
+
+  Future<void> _savePreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_nameKey, _nameController.text);
+    await prefs.setString(_emailKey, _emailController.text);
+    await prefs.setString(_phoneKey, _phoneController.text);
+    await prefs.setString(_addressKey, _addressController.text);
+    await prefs.setBool(_newsletterKey, _newsletterSelected);
+  }
+
+  void _handleSave() {
+    if (_isSaving) return;
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isSaving = true);
+      _savePreferences();
+      if (mounted) {
+        setState(() => _isSaving = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Profile saved successfully!'),
+            backgroundColor: cinemaBrand,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -33,25 +90,25 @@ class _SettingsViewState extends State<SettingsView> {
         backgroundColor: cinemaSurface,
         iconTheme: const IconThemeData(color: cinemaBrand),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildNameField(),
-                const SizedBox(height: 20),
-                _buildEmailField(),
-                const SizedBox(height: 20),
-                _buildPhoneField(),
-                const SizedBox(height: 20),
-                _buildAddressField(),
-                const SizedBox(height: 40),
-                _buildSaveButton(),
-              ],
-            ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildNameField(),
+              const SizedBox(height: 20),
+              _buildEmailField(),
+              const SizedBox(height: 20),
+              _buildPhoneField(),
+              const SizedBox(height: 20),
+              _buildAddressField(),
+              const SizedBox(height: 30),
+              _buildNewsletterCheckbox(),
+              const SizedBox(height: 40),
+              _buildSaveButton(),
+            ],
           ),
         ),
       ),
@@ -139,22 +196,38 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 
+  Widget _buildNewsletterCheckbox() {
+    return Row(
+      children: [
+        Theme(
+          data: Theme.of(context).copyWith(
+            unselectedWidgetColor: cinemaBrand,
+          ),
+          child: Checkbox(
+            value: _newsletterSelected,
+            onChanged: (bool? value) {
+              setState(() {
+                _newsletterSelected = value!;
+              });
+            },
+          ),
+        ),
+        const Expanded(
+          child: Text(
+            'Subscribe to cinema news and offers',
+            style: TextStyle(color: cinemaFontWhite),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildSaveButton() {
     return SizedBox(
       width: double.infinity,
       child: PrimaryButton(
         label: 'Save Changes',
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            // TODO: Save profile data
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Profile saved successfully!'),
-                backgroundColor: cinemaBrand,
-              ),
-            );
-          }
-        },
+        onPressed: _handleSave,
       ),
     );
   }
