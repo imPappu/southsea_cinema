@@ -3,6 +3,8 @@ import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/repositories/movie_repository.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('MovieRepository unit tests', () {
     test('getMovies returns three movies', () {
       final MovieRepository repository = MovieRepository();
@@ -38,6 +40,16 @@ void main() {
       expect(dune.screeningTime, '18:45');
       expect(dune.ticketPrice, 13.50);
       expect(dune.posterImagePath, isNotEmpty);
+    });
+
+    test('loadMoviesFromAsset reads all films from JSON', () async {
+      final MovieRepository repository = MovieRepository();
+      final List<Movie> movies = await repository.loadMoviesFromAsset();
+
+      expect(movies.length, 3);
+      expect(movies[0].title, 'The Phantom of the Opera');
+      expect(movies[1].title, 'Interstellar');
+      expect(movies[2].title, 'Dune: Part Two');
     });
 
     test('getMovieById returns matching movie when id exists', () {

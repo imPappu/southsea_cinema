@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:southsea_cinema/models/movie.dart';
 
 class MovieRepository {
@@ -37,6 +40,12 @@ class MovieRepository {
         posterImagePath: 'assets/images/dune.png',
       ),
     ];
+  }
+
+  Future<List<Movie>> loadMoviesFromAsset() async {
+    final jsonString = await rootBundle.loadString('assets/data/movies.json');
+    final List<dynamic> jsonList = jsonDecode(jsonString);
+    return jsonList.map((json) => Movie.fromJson(json)).toList();
   }
 
   Movie? getMovieById(String id) {
