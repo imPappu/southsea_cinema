@@ -16,6 +16,9 @@ void main() {
     testWidgets('Displays movie cards with titles and booking buttons',
         (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
+      // The home view shows a loading indicator initially;
+      // the async future should complete quickly.
+      await tester.pump(const Duration(seconds: 2));
       expect(find.text('The Phantom of the Opera'), findsOneWidget);
       expect(find.text('Interstellar'), findsOneWidget);
       expect(find.text('Book Tickets'), findsNWidgets(2));
@@ -24,9 +27,10 @@ void main() {
     testWidgets('Scrolling shows third movie card',
         (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pump(const Duration(seconds: 2));
       
       await tester.drag(find.byType(ListView), const Offset(0, -500));
-      await tester.pumpAndSettle();
+      await tester.pump();
       
       expect(find.text('Dune: Part Two'), findsOneWidget);
       expect(find.text('£13.50'), findsOneWidget);
@@ -35,9 +39,10 @@ void main() {
     testWidgets('Tapping Book Tickets navigates to MovieListing with selected movie',
         (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pump(const Duration(seconds: 2));
 
       await tester.tap(find.text('Book Tickets').first);
-      await tester.pumpAndSettle();
+      await tester.pump();
 
       expect(find.byType(MovieListing), findsOneWidget);
       expect(find.text('The Phantom of the Opera'), findsOneWidget);
