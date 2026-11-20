@@ -24,7 +24,7 @@ void main() {
         posterImagePath: 'assets/images/test.png',
       );
 
-      repository.add(movie);
+      repository.add(movie, quantity: 1);
 
       expect(repository.items.length, 1);
       expect(repository.items[0].quantity, 1);
@@ -44,8 +44,8 @@ void main() {
         posterImagePath: 'assets/images/test.png',
       );
 
-      repository.add(movie);
-      repository.add(movie);
+      repository.add(movie, quantity: 1);
+      repository.add(movie, quantity: 1);
 
       expect(repository.items.length, 1);
       expect(repository.items[0].quantity, 2);
@@ -65,8 +65,8 @@ void main() {
         posterImagePath: 'assets/images/test.png',
       );
 
-      repository.add(movie);
-      repository.add(movie);
+      repository.add(movie, quantity: 1);
+      repository.add(movie, quantity: 1);
       repository.remove(movie);
 
       expect(repository.items.length, 1);
@@ -87,8 +87,8 @@ void main() {
         posterImagePath: 'assets/images/test.png',
       );
 
-      repository.add(movie);
-      repository.add(movie);
+      repository.add(movie, quantity: 1);
+      repository.add(movie, quantity: 1);
       repository.remove(movie);
       repository.remove(movie);
 
@@ -109,8 +109,8 @@ void main() {
         posterImagePath: 'assets/images/test.png',
       );
 
-      repository.add(movie);
-      repository.add(movie);
+      repository.add(movie, quantity: 1);
+      repository.add(movie, quantity: 1);
       repository.clear();
 
       expect(repository.items, isEmpty);
@@ -141,9 +141,9 @@ void main() {
         posterImagePath: 'assets/images/test.png',
       );
 
-      repository.add(phantom);
-      repository.add(interstellar);
-      repository.add(phantom);
+      repository.add(phantom, quantity: 1);
+      repository.add(interstellar, quantity: 1);
+      repository.add(phantom, quantity: 1);
 
       expect(repository.total, 39.00);
       expect(repository.totalItems, 3);

@@ -4,14 +4,16 @@ import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/repositories/movie_repository.dart';
 import 'package:southsea_cinema/widgets/movie_card.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/repositories/basket_repository.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final repository = MovieRepository();
-    final List<Movie> movies = repository.getMovies();
+    final movieRepository = MovieRepository();
+    final basketRepository = BasketRepository();
+    final List<Movie> movies = movieRepository.getMovies();
 
     return Scaffold(
       appBar: AppBar(
@@ -24,6 +26,7 @@ class HomeView extends StatelessWidget {
           final movie = movies[index];
           return MovieCard(
             movie: movie,
+            basketRepository: basketRepository,
           );
         },
       ),

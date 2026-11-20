@@ -4,17 +4,17 @@ import 'package:southsea_cinema/models/movie.dart';
 class BasketRepository {
   List<BasketItem> _items = [];
 
-  void add(Movie movie) {
+  void add(Movie movie, {int quantity = 1}) {
     final existingIndex =
         _items.indexWhere((item) => item.movie.id == movie.id);
 
     if (existingIndex >= 0) {
       _items[existingIndex] = BasketItem(
         movie: _items[existingIndex].movie,
-        quantity: _items[existingIndex].quantity + 1,
+        quantity: _items[existingIndex].quantity + quantity,
       );
     } else {
-      _items.add(BasketItem(movie: movie));
+      _items.add(BasketItem(movie: movie, quantity: quantity));
     }
   }
 

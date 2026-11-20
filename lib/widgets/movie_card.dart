@@ -3,11 +3,17 @@ import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
+import 'package:southsea_cinema/repositories/basket_repository.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
+  final BasketRepository basketRepository;
 
-  const MovieCard({super.key, required this.movie});
+  const MovieCard({
+    super.key,
+    required this.movie,
+    required this.basketRepository,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +97,10 @@ class MovieCard extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MovieListing(movie: movie),
+                      builder: (context) => MovieListing(
+                        movie: movie,
+                        basketRepository: basketRepository,
+                      ),
                     ),
                   );
                 },

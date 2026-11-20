@@ -4,6 +4,7 @@ import 'package:southsea_cinema/main.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
+import 'package:southsea_cinema/repositories/basket_repository.dart';
 
 void main() {
   group('App smoke tests', () {
@@ -53,7 +54,8 @@ void main() {
   group('MovieListing booking flow', () {
     testWidgets('MovieListing displays movie details and price',
         (WidgetTester tester) async {
-      const movie = Movie(
+      final BasketRepository basketRepository = BasketRepository();
+      final movie = Movie(
         id: 'test',
         title: 'Test Movie',
         synopsis: 'Test description',
@@ -65,7 +67,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: MovieListing(movie: movie),
+          home: MovieListing(movie: movie, basketRepository: basketRepository),
         ),
       );
 
@@ -76,7 +78,8 @@ void main() {
 
     testWidgets('MovieListing shows booking feedback when Add to order tapped',
         (WidgetTester tester) async {
-      const movie = Movie(
+      final BasketRepository basketRepository = BasketRepository();
+      final movie = Movie(
         id: 'test',
         title: 'Test Movie',
         synopsis: 'Test description',
@@ -92,7 +95,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: MovieListing(movie: movie),
+          home: MovieListing(movie: movie, basketRepository: basketRepository),
         ),
       );
 
